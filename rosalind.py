@@ -36,6 +36,27 @@ def rna(dataset_file):
     return result
 
 
+#  Title: Complementing a Strand of DNA
+#  URL:   http://rosalind.info/problems/revc/
+def revc(dataset_file):
+
+    result = ''
+    complement = {'A' : 'T',
+                  'T' : 'A',
+                  'C' : 'G',
+                  'G' : 'C' }
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            for char in line[-1::-1]:
+                if char in complement:
+                    char = complement[char]
+                    result += char
+    result += '\n'
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
