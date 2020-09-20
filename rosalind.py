@@ -21,6 +21,21 @@ def dna(dataset_file):
     return result
 
 
+#  Title: Transcribing DNA into RNA
+#  URL:   http://rosalind.info/problems/rna/
+def rna(dataset_file):
+
+    result = ''
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            for char in line:
+                char = 'U' if char == 'T' else char
+                result += char
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
