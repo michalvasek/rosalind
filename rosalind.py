@@ -57,6 +57,26 @@ def revc(dataset_file):
     return result
 
 
+#  Title: Rabbits and Recurrence Relations
+#  URL:   http://rosalind.info/problems/fib/
+def fib(dataset_file):
+
+    adults, children = 1, 0
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            numbers = [int(n) for n in line.split()]
+            n = numbers[0]
+            k = numbers[1]
+
+    for month in range(1, n):
+        adults, children = adults + children, adults * k
+
+    result = str(adults)
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
