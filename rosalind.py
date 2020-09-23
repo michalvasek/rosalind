@@ -116,6 +116,24 @@ def gc(dataset_file):
     return result
 
 
+#  Title: Counting Point Mutations
+#  URL:   http://rosalind.info/problems/hamm/
+def hamm(dataset_file):
+
+    with open(dataset_file, 'r') as file:
+        s = file.readline()[:-1]
+        t = file.readline()[:-1]
+
+    distance = 0
+    for i in range(len(s)):
+        if s[i] != t[i]:
+            distance += 1
+
+    result = str(distance)
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
