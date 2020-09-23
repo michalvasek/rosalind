@@ -77,6 +77,45 @@ def fib(dataset_file):
     return result
 
 
+#  Title: Computing GC Content
+#  URL:   http://rosalind.info/problems/gc/
+def gc(dataset_file):
+
+    dna = ''
+    dataset = []
+    result = ''
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            if line[0] == '>':
+                if dna:
+                    dataset.append({'label' : label,
+                                    'dna'   : dna,
+                                    'gc'    : None})
+                    dna = ''
+                label = line[1:-1]
+            else:
+                dna += line[:-1]
+        dataset.append({'label' : label,
+                        'dna'   : dna,
+                        'gc'    : None})
+
+    for item in dataset:
+        gc_count = 0
+        for char in item['dna']:
+            if char in ['G', 'C']:
+                gc_count += 1
+        item['gc'] = gc_count / len(item['dna'])
+
+    max = 0
+    for item in dataset:
+        if item['gc'] > max:
+            result = item['label'] + '\n' + str(round(item['gc'] * 100, 3))
+            max = item['gc']
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
