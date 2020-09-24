@@ -169,6 +169,26 @@ def prot(dataset_file):
     return result
 
 
+#  Title: Finding a Motif in DNA
+#  URL:   http://rosalind.info/problems/subs/
+def subs(dataset_file):
+
+    result = []
+
+    with open(dataset_file, 'r') as file:
+        s = file.readline()[:-1]
+        t = file.readline()[:-1]
+
+    length = len(t)
+    for i in range(len(s) - length + 1):
+        if s[i:i + length] == t:
+            result.append(i + 1)
+
+    result = ' '.join(str(n) for n in result)
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
