@@ -134,6 +134,41 @@ def hamm(dataset_file):
     return result
 
 
+#  Title: Translating RNA into Protein
+#  URL:   http://rosalind.info/problems/prot/
+def prot(dataset_file):
+
+    result = ''
+    stop_codons = ['UAA', 'UAG', 'UGA']
+    codons = {'AAA' : 'K', 'AAC' : 'N', 'AAG' : 'K', 'AAU' : 'N',
+              'ACA' : 'T', 'ACC' : 'T', 'ACG' : 'T', 'ACU' : 'T',
+              'AGA' : 'R', 'AGC' : 'S', 'AGG' : 'R', 'AGU' : 'S',
+              'AUA' : 'I', 'AUC' : 'I', 'AUG' : 'M', 'AUU' : 'I',
+              'CAA' : 'Q', 'CAC' : 'H', 'CAG' : 'Q', 'CAU' : 'H',
+              'CCA' : 'P', 'CCC' : 'P', 'CCG' : 'P', 'CCU' : 'P',
+              'CGA' : 'R', 'CGC' : 'R', 'CGG' : 'R', 'CGU' : 'R',
+              'CUA' : 'L', 'CUC' : 'L', 'CUG' : 'L', 'CUU' : 'L',
+              'GAA' : 'E', 'GAC' : 'D', 'GAG' : 'E', 'GAU' : 'D',
+              'GCA' : 'A', 'GCC' : 'A', 'GCG' : 'A', 'GCU' : 'A',
+              'GGA' : 'G', 'GGC' : 'G', 'GGG' : 'G', 'GGU' : 'G',
+              'GUA' : 'V', 'GUC' : 'V', 'GUG' : 'V', 'GUU' : 'V',
+              'UAC' : 'Y', 'UAU' : 'Y', 'UCA' : 'S', 'UCC' : 'S',
+              'UCG' : 'S', 'UCU' : 'S', 'UGC' : 'C', 'UGG' : 'W',
+              'UGU' : 'C', 'UUA' : 'L', 'UUC' : 'F', 'UUG' : 'L',
+              'UUU' : 'F' }
+
+    with open(dataset_file, 'r') as file:
+        s = file.readline()[:-1]
+
+    for i in range(s.find('AUG'), len(s), 3):
+        codon = s[i:i+3]
+        if codon in stop_codons:
+            break
+        result += codons[codon]
+    
+    return result
+
+
 if __name__ == '__main__':
 
     try:
