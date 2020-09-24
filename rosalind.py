@@ -189,6 +189,32 @@ def subs(dataset_file):
     return result
 
 
+#  Title: Mendel's First Law
+#  URL:   http://rosalind.info/problems/iprb/
+def iprb(dataset_file):
+
+    result = ''
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            numbers = [int(n) for n in line.split()]
+
+    dom = numbers[0]
+    hetero = numbers[1]
+    rec = numbers[2]
+
+    individuals = (dom + hetero + rec)
+    n_all = individuals * individuals - individuals
+    n_100 = individuals * individuals - (hetero + rec) * (hetero + rec) - dom
+    n_75  = hetero * hetero - hetero
+    n_50  = 2 * hetero * rec
+
+    result = (1.00 * n_100 + 0.75 * n_75 + 0.50 * n_50) / n_all
+    result = str(round(result, 5))
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
