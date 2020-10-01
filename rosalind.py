@@ -57,6 +57,20 @@ def revc(dataset_file):
     return result
 
 
+def reverse_complement(dna):
+
+    result = ''
+    complement = {'A' : 'T',
+                  'T' : 'A',
+                  'C' : 'G',
+                  'G' : 'C' }
+
+    for char in dna[::-1]:
+        result += complement[char]
+
+    return result
+
+
 #  Title: Rabbits and Recurrence Relations
 #  URL:   http://rosalind.info/problems/fib/
 def fib(dataset_file):
@@ -211,6 +225,34 @@ def iprb(dataset_file):
 
     result = (1.00 * n_100 + 0.75 * n_75 + 0.50 * n_50) / n_all
     result = str(round(result, 5))
+
+    return result
+
+
+#  Title: Locating Restriction Sites
+#  URL:   http://rosalind.info/problems/revp/
+def revp(dataset_file):
+
+    result = ''
+    dna = ''
+    min, max = 4, 12
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            if line[0] == '>':
+                continue
+            else:
+                dna += line[:-1]
+    
+    len_dna = len(dna)
+    for i in range(len_dna):
+        for n in range(min, max + 1):
+            if i + n > len_dna:
+                continue
+            segment = dna[i:i + n]
+            revc = reverse_complement(segment)
+            if segment == revc:
+                result += '%d %d\n' % (i + 1, n)
 
     return result
 
