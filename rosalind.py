@@ -257,6 +257,37 @@ def revp(dataset_file):
     return result
 
 
+#  Title: Mortal Fibonacci Rabbits
+#  URL:   http://rosalind.info/problems/fibd/
+def fibd(dataset_file):
+
+    generation = list()
+    children, adults = 0, 0
+    generation.append({'children' : children, 'adults' : adults})
+    children, adults = 1, 0
+    generation.append({'children' : children, 'adults' : adults})
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            numbers = [int(n) for n in line.split()]
+            m = numbers[0]
+            n = numbers[1]
+    
+    for month in range(2, m + 1):
+        children = generation[month - 1]['adults']
+        adults = generation[month - 1]['children']
+        adults += generation[month - 1]['adults']
+        if month > n:
+            adults -= generation[month - n]['children']
+        generation.append({'children' : children, 'adults' : adults})
+
+    children = generation[month]['adults']
+    adults = generation[month]['children']
+    result = str(children + adults)
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
