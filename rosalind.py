@@ -310,6 +310,48 @@ def perm(dataset_file):
     return result
 
 
+def load_dna(dataset_file):
+
+    dna = ''
+    dataset = []
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            if line[0] == '>':
+                if dna:
+                    dataset.append({'label' : label,
+                                    'dna'   : dna})
+                    dna = ''
+                label = line[1:-1]
+            else:
+                dna += line[:-1]
+        dataset.append({'label' : label,
+                        'dna'   : dna})
+
+    return dataset    
+
+
+#  Title: Overlap Graphs
+#  URL:   http://rosalind.info/problems/grph/
+def grph(dataset_file):
+
+    result = ''
+    nodes = load_dna(dataset_file)
+
+    for node in nodes:
+        node.update({'prefix' : node['dna'][:3],
+                     'suffix' : node['dna'][-3:]})
+
+    for i in range(len(nodes)):
+        for j in range(len(nodes)):
+            if i == j:
+                continue
+            if nodes[i]['suffix'] == nodes[j]['prefix']:
+                result += '%s %s\n' % (nodes[i]['label'], nodes[j]['label'])
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
