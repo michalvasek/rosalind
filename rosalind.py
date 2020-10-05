@@ -1,5 +1,8 @@
 import sys
 
+from math import factorial
+from itertools import permutations
+
 
 #  Title: Counting DNA Nucleotides
 #  URL:   http://rosalind.info/problems/dna/
@@ -284,6 +287,25 @@ def fibd(dataset_file):
     children = generation[month]['adults']
     adults = generation[month]['children']
     result = str(children + adults)
+
+    return result
+
+
+#  Title: Enumerating Gene Orders
+#  URL:   http://rosalind.info/problems/perm/
+def perm(dataset_file):
+
+    result = ''
+
+    with open(dataset_file, 'r') as file:
+        n = int(file.readline()[:-1])
+
+    result += str(factorial(n)) + '\n'
+
+    integers = [str(i) for i in range(1, n + 1)]
+    perms = permutations(integers)
+    for perm in perms:
+        result += (' '.join(perm)) + '\n'
 
     return result
 
