@@ -407,6 +407,38 @@ def iev(dataset_file):
     return result
 
 
+#  Title: Consensus and Profile
+#  URL:   http://rosalind.info/problems/cons/
+def cons(dataset_file):
+
+    result = ''
+
+    dnas = load_dna(dataset_file)
+    count = len(dnas)
+    length = len(dnas[0]['dna'])
+
+    profile = {'A' : [0] * length,
+               'C' : [0] * length,
+               'G' : [0] * length,
+               'T' : [0] * length}
+
+    for i in range(length):
+        for j in range(count):
+            profile[dnas[j]['dna'][i]][i] += 1
+
+    for pos in zip(*profile.values()):
+        col = dict(zip(['A', 'C', 'G', 'T'], pos))
+        symbol = max(col, key=lambda key: col[key])
+        result += symbol
+    result += '\n'
+
+    for key, values in profile.items():
+        result += '%s: ' % (key)
+        result += ' '.join(str(value) for value in values) + '\n'
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
