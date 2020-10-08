@@ -328,7 +328,7 @@ def load_dna(dataset_file):
         dataset.append({'label' : label,
                         'dna'   : dna})
 
-    return dataset    
+    return dataset
 
 
 #  Title: Overlap Graphs
