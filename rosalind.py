@@ -375,6 +375,38 @@ def prtm(dataset_file):
     return result
 
 
+def load_numbers(dataset_file):
+
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            numbers = [int(n) for n in line.split()]
+
+    return numbers
+
+
+#  Title: Calculating Expected Offspring
+#  URL:   http://rosalind.info/problems/iev/
+def iev(dataset_file):
+
+    result = 0
+    couples = [{'genotypes' : 'AA-AA', 'dominant' : 1.00},
+               {'genotypes' : 'AA-Aa', 'dominant' : 1.00},
+               {'genotypes' : 'AA-aa', 'dominant' : 1.00},
+               {'genotypes' : 'Aa-Aa', 'dominant' : 0.75},
+               {'genotypes' : 'Aa-aa', 'dominant' : 0.50},
+               {'genotypes' : 'aa-aa', 'dominant' : 0.00}]
+
+    counts = load_numbers(dataset_file)
+    for i, couple in enumerate(couples):
+        couple.update({'count' : counts[i]})
+
+    for couple in couples:
+        result += couple['dominant'] * couple['count'] * 2
+    result = str(result)
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
