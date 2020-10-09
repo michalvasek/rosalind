@@ -439,6 +439,39 @@ def cons(dataset_file):
     return result
 
 
+def load_protein(dataset_file):
+
+    with open(dataset_file, 'r') as file:
+        protein = file.readline()[:-1]
+
+    return protein
+
+
+#  Title: Inferring mRNA from Protein
+#  URL:   http://rosalind.info/problems/mrna/
+def mrna(dataset_file):
+
+    modulus = 1000000
+    codons = {'A' : 4, 'C' : 2, 'D' : 2, 'E' : 2,
+              'F' : 2, 'G' : 4, 'H' : 2, 'I' : 3,
+              'K' : 2, 'L' : 6, 'M' : 1, 'N' : 2,
+              'P' : 4, 'Q' : 2, 'R' : 6, 'S' : 6,
+              'T' : 4, 'V' : 4, 'W' : 1, 'Y' : 2}
+
+    protein = load_protein(dataset_file)
+
+    result = 1
+    for aa in protein:
+        result *= codons[aa]
+        while result > modulus:
+            result -= modulus
+    result *= 3
+    result %= modulus
+    result = str(result)
+
+    return result
+
+
 if __name__ == '__main__':
 
     try:
