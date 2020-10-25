@@ -1,4 +1,5 @@
 import sys
+from collections import Counter
 
 from math import factorial
 from itertools import permutations
@@ -12,14 +13,14 @@ def dna(dataset_file):
             'C' : 0,
             'G' : 0,
             'T' : 0 }
+    results = {}
 
     with open(dataset_file, 'r') as file:
-        for line in file:
-            for char in line:
-                if char in acgt:
-                    acgt[char] += 1
+        text = "".join([line for line in file])
+        Counter(text)
 
-    result = '%d %d %d %d' % (acgt['A'], acgt['C'], acgt['G'], acgt['T']) 
+
+    result = '%d %d %d %d' % (acgt['A'], acgt['C'], acgt['G'], acgt['T'])
 
     return result
 
@@ -36,6 +37,10 @@ def rna(dataset_file):
                 char = 'U' if char == 'T' else char
                 result += char
 
+        text = "".join([line for line in file])
+        text.replace("T", "U")
+
+
     return result
 
 
@@ -51,10 +56,12 @@ def revc(dataset_file):
 
     with open(dataset_file, 'r') as file:
         for line in file:
-            for char in line[-1::-1]:
+            for char in reversed(line):
                 if char in complement:
                     char = complement[char]
                     result += char
+
+            line.replace("A", "a").replace("T", "A").replace("a", "T")
     result += '\n'
 
     return result
@@ -83,8 +90,10 @@ def fib(dataset_file):
     with open(dataset_file, 'r') as file:
         for line in file:
             numbers = [int(n) for n in line.split()]
+            numbers = map(int, line.split())
             n = numbers[0]
             k = numbers[1]
+            n, k = numbers[:2]
 
     for month in range(1, n):
         adults, children = adults + children, adults * k
@@ -107,15 +116,13 @@ def gc(dataset_file):
             if line[0] == '>':
                 if dna:
                     dataset.append({'label' : label,
-                                    'dna'   : dna,
-                                    'gc'    : None})
+                                    'dna'   : dna})
                     dna = ''
                 label = line[1:-1]
             else:
                 dna += line[:-1]
         dataset.append({'label' : label,
-                        'dna'   : dna,
-                        'gc'    : None})
+                        'dna'   : dna})
 
     for item in dataset:
         gc_count = 0
@@ -131,6 +138,30 @@ def gc(dataset_file):
             max = item['gc']
 
     return result
+
+
+def gc1(dataset_file):
+    dataset = {}
+    last_label = None
+    with open(dataset_file, 'r') as file:
+        for line in file:
+            if line.startswith('>'):
+                last_label = line[1:].strip()
+                dataset[last_label] = ""    # defaultdict
+            else:
+                dataset[last_label] += line
+
+    max_label = None
+    max_gc = 0
+    for label, dna in dataset.items():
+        c = Counter(dna)
+        gc_count = c['G'] + c['C']
+        gc = gc_count / len(dna)
+        if gc > max_gc:
+            max_label = label
+            max_gc = gc
+
+    return dataset[max_label]
 
 
 #  Title: Counting Point Mutations
